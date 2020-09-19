@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-let client = require('redis').createClient(process.env.REDIS_URL);//redis
+let client = require('redis').createClient(process.env.REDIS_URL);//redis server
 let Redis = require('ioredis');
 let redis = new Redis(process.env.REDIS_URL);
 
