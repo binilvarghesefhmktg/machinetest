@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-let client = require('redis').createClient(process.env.REDIS_URL);
+let client = require('redis').createClient(process.env.REDIS_URL);//redis
 let Redis = require('ioredis');
 let redis = new Redis(process.env.REDIS_URL);
 
@@ -188,13 +188,14 @@ const getProfile = async (req, res, next) => {
 
 // API to get the login list.
 const getUsersList = async (req, res, next) => {
+  const userId = req.userData.userId;
   let users;
   try {
-    users = await LoginActivity.find()
-    .populate({
-      path: "userId",
-      select: "name , email",
-    })
+    users = await LoginActivity.find({userId:userId})
+    // .populate({
+    //   path: "userId",
+    //   select: "name , email",
+    // })
     .sort({
       loginDate: 1,
     });
