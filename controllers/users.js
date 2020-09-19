@@ -150,7 +150,11 @@ const login = async (req, res, next) => {
       });
       return;
     }
-    redis.set(existingUser.id, token, 'ex', 36000);
+    // client.set(existingUser.id, JSON.stringify(existingUser);
+    client.set(existingUser.id, token, 'EX', 3600);
+    // client.get(existingUser.id, (error, rep)=> {
+    //   console.log(rep);
+    // }); 
     res.json({
       userId: existingUser.id,
       email: existingUser.email,
@@ -178,7 +182,7 @@ const getProfile = async (req, res, next) => {
     });
     return;
   }
-  redis.set(user.id, token, 'ex', 36000);
+  client.set(user.id, token, 'EX', 3600);
   res.json({ user: user });
 };
 
@@ -192,7 +196,7 @@ const getUsersList = async (req, res, next) => {
       select: "name , email",
     })
     .sort({
-      name: 1,
+      loginDate: 1,
     });
   } catch (err) {
     HttpError(res, 500, {
@@ -200,7 +204,7 @@ const getUsersList = async (req, res, next) => {
     });
     return;
   }
-  res.json({ users: users });
+  res.json({ data: users });
 };
 
 exports.register = register;
