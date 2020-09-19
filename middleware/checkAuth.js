@@ -10,6 +10,7 @@ module.exports = (req, res, next) => {
     }
     const decodedToken = jwt.verify(token, "BINILVARGHESE");
     req.userData = { userId: decodedToken.userId };
+    req.token = token;
     next();
   } catch (err) {
     HttpError(res, 403, {

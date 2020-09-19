@@ -1,11 +1,14 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Redis = require("ioredis");
-// const redis = new Redis();
+
+let client = require('redis').createClient(process.env.REDIS_URL);
+let Redis = require('ioredis');
+let redis = new Redis(process.env.REDIS_URL);
 
 const HttpError = require("../helper/httpError");
 const User = require("../models/user");
+const LoginActivity = require("../models/loginActivity");
 
 //API to register an user.
 const register = async (req, res, next) => {
@@ -134,9 +137,20 @@ const login = async (req, res, next) => {
   existingUser.lastLogin = Date.now();
   try {
     await existingUser.save();
-
-    // redis.set(existingUser.id, token, 'ex', 36000);
-    
+    try {
+      const loginActivity = new LoginActivity({
+        token: token,
+        userId: existingUser.id,
+        loginDate:Date.now(),
+      });
+      await loginActivity.save();
+    } catch (err) {
+      HttpError(res, 500, {
+        message: "Logging in failed, please try again later.",
+      });
+      return;
+    }
+    redis.set(existingUser.id, token, 'ex', 36000);
     res.json({
       userId: existingUser.id,
       email: existingUser.email,
@@ -154,7 +168,7 @@ const login = async (req, res, next) => {
 //API to get the user profile
 const getProfile = async (req, res, next) => {
   const userId = req.userData.userId;
-
+  const token = req.token;
   let user;
   try {
     user = await User.findById(userId, "-password");
@@ -164,19 +178,22 @@ const getProfile = async (req, res, next) => {
     });
     return;
   }
-  // redis.set(existingUser.id, token, 'ex', 36000);
+  redis.set(user.id, token, 'ex', 36000);
   res.json({ user: user });
 };
 
-// API to get the users list.
+// API to get the login list.
 const getUsersList = async (req, res, next) => {
   let users;
-
-  // const keys = await redis.collection.keys('*');
-  // const values = await redis.collection.mget(keys);
-
   try {
-    users = await User.find({}, "-password");
+    users = await LoginActivity.find()
+    .populate({
+      path: "userId",
+      select: "name , email",
+    })
+    .sort({
+      name: 1,
+    });
   } catch (err) {
     HttpError(res, 500, {
       message: "Something went Wrong",

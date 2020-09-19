@@ -1,10 +1,7 @@
-const Redis = require("ioredis");
-
-const redis = new Redis({
-  port: 16749,
-  host: 'redis-16749.c241.us-east-1-4.ec2.cloud.redislabs.com',
-  password: 'NGxiDFHKJdkMLHlG1MsxSIDqK9TRZvcs',
-  db: 'test'
-});
+dotenv.config();
+let redis_url = process.env.REDIS_URL;
+let client = require('redis').createClient(redis_url);
+let Redis = require('ioredis');
+let redis = new Redis(redis_url);
 
 
