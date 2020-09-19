@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "63937615-1670-46df-9bf8-6639fb862437",
+		"name": "Machine Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/users/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Binil varghese\",\"email\":\"binilvarghese@gmail.com\",\"password\":\"password\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/users/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"binilvarghese@gmail.com\",\"password\":\"password\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/users/list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjY1OWVkNTBjODRlYjI3OGM5ZDlhMjEiLCJlbWFpbCI6ImJpbmlsdmFyZ2hlc2VAZ21haWwuY29tIiwiaWF0IjoxNjAwNDk5NDc3LCJleHAiOjE2MDA1MDMwNzd9.01tOlaV2nzV5cK1-FjaJMsR2OIVCa33haSlNBGQI6bw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/users/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/users/profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjY1OWVkNTBjODRlYjI3OGM5ZDlhMjEiLCJlbWFpbCI6ImJpbmlsdmFyZ2hlc2VAZ21haWwuY29tIiwiaWF0IjoxNjAwNDk5NDc3LCJleHAiOjE2MDA1MDMwNzd9.01tOlaV2nzV5cK1-FjaJMsR2OIVCa33haSlNBGQI6bw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/users/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
